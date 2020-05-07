@@ -1,0 +1,31 @@
+version: '3'
+services:
+  db:
+    image: postgres:11.4-alpine
+    container_name: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ~/pg_data:/var/lib/postgresql/data/pgdata
+    environment:
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: singer-app-db
+      PGDATA: /var/lib/postgresql/data/pgdata
+    restart: always
+  app:
+    image: viktorvx/singer-app-back
+    container_name: singer-app-back
+    ports:
+      - 8080:8080
+    environment:
+      POSTGRES_HOST: db
+    restart: always
+    links:
+      - db
+  front:
+    image: viktorvx/singer-app-front
+    container_name: singer-app-front
+    links:
+      - app
+    ports:
+      - 80:80
