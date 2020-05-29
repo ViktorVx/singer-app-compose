@@ -6,7 +6,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ~/pg_data:/var/lib/postgresql/data/pgdata
+      - /home/pg_data:/var/lib/postgresql/data/pgdata
     environment:
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: singer-app-db
